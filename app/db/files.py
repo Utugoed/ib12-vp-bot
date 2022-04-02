@@ -16,11 +16,7 @@ class Files:
                 input_msgs = [{"subject_id": input_data["subject_id"], "message_text": text} for text in input_data["msgs"]]
                 db_input_data += input_msgs
             if "photos" in input_data.keys():
-                print()
-                print(input_data["photos"])
                 input_photos_set = set(input_data["photos"])
-                print()
-                print(input_photos_set)
                 input_photos = [{"subject_id": input_data["subject_id"], "photo_id": id} for id in input_photos_set]
                 db_input_data += input_photos
             await db[collection].insert_many(db_input_data)
