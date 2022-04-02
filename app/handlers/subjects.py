@@ -47,9 +47,6 @@ async def cancel_upload(message: types.Message, state: FSMContext):
 @dp.message_handler(text='Готово', state=FSMUploadFiles.get_file)
 async def complete_upload(message: types.Message, state: FSMContext):
     data = await state.get_data()
-    print()
-    print("Hi")
-    print()
     subject_id = await Subjects.get_subject_id(data["subject"])
     input_data = {"subject_id": subject_id}
     if "msgs" in data.keys():
