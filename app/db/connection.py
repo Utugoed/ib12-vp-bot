@@ -9,8 +9,9 @@ class Database:
 
 db = Database()
 db.client = AsyncIOMotorClient(
-        MONGO_URL,
-    )
+    MONGO_URL,
+)
+
 
 async def get_db():
     return db.client[MONGO_DB]

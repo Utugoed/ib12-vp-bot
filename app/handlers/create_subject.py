@@ -1,4 +1,3 @@
-from email import message
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -10,10 +9,12 @@ from app.loader import dp
 class FSMSbjCreate(StatesGroup):
     sbj_name = State()
 
-@dp.message_handler(commands=["create_sbj"])
+
+@dp.message_handler(text="Добавить предмет")
 async def create_subject(message: types.Message):
     await FSMSbjCreate.sbj_name.set()
     await message.answer(text="Напишите название предемета")
+
 
 @dp.message_handler(state=FSMSbjCreate.sbj_name)
 async def get_sbj_name(message: types.Message, state: FSMContext):
@@ -22,7 +23,7 @@ async def get_sbj_name(message: types.Message, state: FSMContext):
         await message.answer(text="Этот предмет уже добавлен")
         await state.finish()
     else:
-        await Subjects.insert_subject(message.text)
-        answer_text = "\n".join(sbj_list)
-        await message.answer(text="Готово. Теперь список предметов следующий\n"+answer_text)
+        await message.answer(
+            text="Готово. Предмет " + message.text + " был успешно добавлен."
+        )
         await state.finish()

@@ -1,10 +1,9 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
-upload_btn = KeyboardButton("/upload")
-download_btn = KeyboardButton("/download")
-create_sbj_btn = KeyboardButton("/create_sbj")
-delete_sbj_btn = KeyboardButton("/delete_sbj")
+choose_sbj_btn = KeyboardButton("Список предметов")
+create_sbj_btn = KeyboardButton("Добавить предмет")
+delete_sbj_btn = KeyboardButton("Удалить предмет")
 
 main_keyboard = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-main_keyboard.add(upload_btn).insert(download_btn).add(create_sbj_btn).insert(delete_sbj_btn)
+main_keyboard.add(choose_sbj_btn).add(create_sbj_btn).insert(delete_sbj_btn)
