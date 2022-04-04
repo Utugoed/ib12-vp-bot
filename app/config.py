@@ -10,7 +10,8 @@ MONGO_URL = os.getenv("MONGO_URL")
 # webhook settings
 WEBHOOK_HOST = 'https://KuricynIsAGod.pythonanywhere.com'
 WEBHOOK_PATH = '/bot/{BOT_TOKEN}'
-WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+WEBHOOK_PORT = 8443
+WEBHOOK_URL = f"{WEBHOOK_HOST}:{WEBHOOK_PORT}{WEBHOOK_PATH}"
 
 # webserver settings
 WEBAPP_HOST = '0.0.0.0'
