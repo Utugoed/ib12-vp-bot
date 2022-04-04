@@ -27,3 +27,23 @@ class Files:
         files = db[collection].find({"subject_id": subject_id})
         files = await files.to_list(length=None)
         return files
+    
+    @staticmethod
+    async def delete_files(input_data: dict):
+        db = await get_db()
+        if ("msgs" in input_data.keys()) or ("photos" in input_data.keys()):
+            db_input_data = []
+            if "msgs" in input_data.keys():
+                input_msgs = [{"subject_id": input_data["subject_id"], "message_text": text} for text in input_data["msgs"]]
+                db_input_data += input_msgs
+            if "photos" in input_data.keys():
+                input_photos_set = set(input_data["photos"])
+                input_photos = [{"subject_id": input_data["subject_id"], "photo_id": id} for id in input_photos_set]
+                db_input_data += input_photos
+            for doc in db_input_data:
+                await db[collection].delete_one(doc)
+    
+    @staticmethod
+    async def delete_subject(subject_id: ObjectId):
+        db = await get_db()
+        await db[collection].delete_many({"subject_id": subject_id})

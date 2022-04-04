@@ -23,6 +23,7 @@ async def get_sbj_name(message: types.Message, state: FSMContext):
         await message.answer(text="Этот предмет уже добавлен")
         await state.finish()
     else:
+        await Subjects.insert_subject(message.text)
         await message.answer(
             text="Готово. Предмет " + message.text + " был успешно добавлен."
         )

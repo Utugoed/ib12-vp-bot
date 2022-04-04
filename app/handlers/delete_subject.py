@@ -1,6 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 
+from app.db.files import Files
 from app.db.subjects import Subjects
 from app.keyboards.del_kb import get_delete_kb
 from app.loader import dp
@@ -17,5 +18,7 @@ async def delete_subject(message: types.Message):
 @dp.callback_query_handler(Text(startswith="del_sbj "))
 async def choose_sbj_for_del(callback: types.CallbackQuery):
     subject = callback.data.replace("del_sbj ", "")
+    subject_id = await Subjects.get_subject_id(subject)
+    await Files.delete_subject(subject_id)
     await Subjects.delete_subject(name=subject)
     await callback.answer("Предмет " + subject + " был удален")
