@@ -5,13 +5,12 @@ from app.handlers import dp
 from app.loader import bot
 
 
-async def on_startup():
-    bot.set_webhook(config.WEBHOOK_URL)
+async def on_startup(dispatcher):
+    await bot.set_webhook(config.WEBHOOK_URL, drop_pending_updates=True)
 
-async def on_shutdown(dp):
+
+async def on_shutdown(dispatcher):
     await bot.delete_webhook()
-    await dp.storage.close()
-    await dp.storage.wait_closed()
 
 if __name__ == "__main__":
     start_webhook(
