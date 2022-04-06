@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.config import MONGO_DB, MONGO_URL
+from app import config
 
 
 class Database:
@@ -8,10 +8,15 @@ class Database:
 
 
 db = Database()
-db.client = AsyncIOMotorClient(
-    MONGO_URL,
-)
 
+async def connect_to_mongodb():
+    db.client = AsyncIOMotorClient(
+        config.MONGO_URL,
+    )
+
+
+async def close_mongodb_connection():
+    db.client.close()
 
 async def get_db():
-    return db.client[MONGO_DB]
+    return db.client[config.MONGO_DB]
