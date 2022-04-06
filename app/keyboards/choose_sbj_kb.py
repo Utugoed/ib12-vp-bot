@@ -6,12 +6,13 @@ from app.db.subjects import Subjects
 async def get_choose_sbj_kb():
     chs_sbj_kb = InlineKeyboardMarkup(row_width=1)
     sbj_list = [sbj["name"].title() for sbj in await Subjects.get_subjects()]
-    btn_list = [
-        InlineKeyboardButton(text=sbj, callback_data=f"chs_sbj {sbj}")
-        for sbj in sbj_list
-    ]
-    chs_sbj_kb.add(*btn_list)
-    return chs_sbj_kb
+    if sbj_list != []:
+        btn_list = [
+            InlineKeyboardButton(text=sbj, callback_data=f"chs_sbj {sbj}")
+            for sbj in sbj_list
+        ]
+        chs_sbj_kb.add(*btn_list)
+        return chs_sbj_kb
 
 
 async def get_choose_action_kb(subject: str):

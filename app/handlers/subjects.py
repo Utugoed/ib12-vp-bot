@@ -13,9 +13,15 @@ from app.loader import dp
 
 @dp.message_handler(text="Список предметов")
 async def subjects_list(message: types.Message):
-    await message.answer(
-        text="Выберите интересующий вас предмет", reply_markup=await get_choose_sbj_kb()
+    choose_sbj_kb = await get_choose_sbj_kb()
+    if choose_sbj_kb is None:
+        await message.answer(
+        text="Пока что ни один предмет не был создан", reply_markup=main_keyboard
     )
+    else:
+        await message.answer(
+            text="Выберите интересующий вас предмет", reply_markup=choose_sbj_kb
+        )
 
 
 @dp.callback_query_handler(Text(startswith="chs_sbj "))
